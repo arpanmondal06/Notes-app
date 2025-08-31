@@ -12,6 +12,11 @@ services:
     restart: always
     depends_on:
       - django
+    deploy:
+      resources:
+        limits:
+          cpus: "0.2"
+          memory: 100M
 
   django:
     build:
@@ -33,6 +38,11 @@ services:
       timeout: 5s
       retries: 5
       start_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 400M
   db:
     container_name: db_cont
     image: mysql
@@ -52,6 +62,11 @@ services:
       timeout: 5s
       retries: 5
       start_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: "0.3"
+          memory: 300M
 
 
 volumes:
