@@ -29,17 +29,20 @@ services:
       - ".env"
     restart: always
     depends_on:
-      db:
-        condition: service_healthy
+      - db
     networks:
       - notes-app
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8000 || exit 1"]
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/admin || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 5
       start_period: 60s
-    
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 400M
   db:
     container_name: db_cont
     image: mysql
@@ -54,7 +57,7 @@ services:
       - notes-app
     restart: always
     healthcheck:
-      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -proot || exit 1"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
       interval: 10s
       timeout: 5s
       retries: 5
