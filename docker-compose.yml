@@ -22,14 +22,15 @@ services:
     build:
       context: .
     container_name: django_cont
-    command: sh -c "python manage.py migrate --no-input && gunicorn notesapp.wsgi --bind 0.0.0.0:8000"
+    command: sh ./wait-for-db.sh
     ports:
       - "8000:8000"
     env_file:
       - ".env"
     restart: always
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - notes-app
     healthcheck:
