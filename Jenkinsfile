@@ -1,12 +1,13 @@
+@Library("Shared-lib") _
 pipeline {
     agent { label 'vinod'}
     
     stages{
         stage("Code"){
             steps{
-                echo "This is cloning the code"
-                git url: "https://github.com/arpanmondal06/Notes-app.git", branch:"main"
-                echo "Clonning successfully"
+                script{
+                    git-clone("https://github.com/arpanmondal06/Notes-app.git", "main")
+                }
             }
         }
         stage("Build"){
