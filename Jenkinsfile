@@ -6,7 +6,7 @@ pipeline {
         stage("Code"){
             steps{
                 script{
-                    git-clone("https://github.com/arpanmondal06/Notes-app.git", "main")
+                    gitClone("https://github.com/arpanmondal06/Notes-app.git", "main")
                 }
             }
         }
